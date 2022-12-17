@@ -1,539 +1,63 @@
-<!DOCTYPE html>
-<html lang="zh-tw" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='搭建一個簡易的Blog的工具Hugo，學習在Windows中安裝Hugo'>
-<meta name="keywords" content="Hugo, Windows, Install"><title>在Windows中安裝Hugo</title>
-
-<link rel='canonical' href='https://horace-yeh.github.io/posts/b1-to-install-hugo-on-windows/'>
-
-<link rel="stylesheet" href="/scss/style.min.5be32ca3f6e1a997c75795c4359147cc6d4fbd34948c0acd51e31d237033978a.css"><meta property='og:title' content='在Windows中安裝Hugo'>
-<meta property='og:description' content='搭建一個簡易的Blog的工具Hugo，學習在Windows中安裝Hugo'>
-<meta property='og:url' content='https://horace-yeh.github.io/posts/b1-to-install-hugo-on-windows/'>
-<meta property='og:site_name' content='想要成為通靈王的阿葉'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='Hugo' /><meta property='article:tag' content='Windows' /><meta property='article:published_time' content='2022-12-17T10:58:34&#43;08:00'/><meta property='article:modified_time' content='2022-12-17T10:58:34&#43;08:00'/>
-<meta name="twitter:title" content="在Windows中安裝Hugo">
-<meta name="twitter:description" content="搭建一個簡易的Blog的工具Hugo，學習在Windows中安裝Hugo">
-    <link rel="shortcut icon" href="/favicon.ico" />
-
-    </head>
-    <body class="
-    article-page
-    ">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            localStorage.setItem(colorSchemeKey, "dark");
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切換選單">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header>
-        
-            
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    <img src="/images/58111487.png" width="300" height="300" class="site-logo" loading="lazy" alt="Avatar">
-                
-                </a>
-                
-            </figure>
-            
-        
-        
-        <div class="site-meta">
-            <h1 class="site-name"><a href="/">想要成為通靈王的阿葉</a></h1>
-            <h2 class="site-description">你今天通靈了嗎? 只給標題不給內容的需求只能靠通靈了!</h2>
-        </div>
-    </header><ol class="social-menu">
-            
-                <li>
-                    <a 
-                        href='https://github.com/horace-yeh'
-                        target="_blank"
-                        title="GitHub"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-</svg>
-
-
-
-                        
-                    </a>
-                </li>
-            
-        </ol><ol class="menu" id="main-menu">
-        
-        
-
-        <div class="menu-bottom-section">
-            
-            
-        </div>
-    </ol>
-</aside>
-
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目錄</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li>
-      <ol>
-        <li><a href="#前言">前言</a></li>
-        <li><a href="#安裝步驟">安裝步驟</a>
-          <ol>
-            <li><a href="#windows-node-安裝">Windows Node 安裝</a></li>
-            <li><a href="#chocolatey-安裝">Chocolatey 安裝</a></li>
-            <li><a href="#hugo-安裝">Hugo 安裝</a></li>
-            <li><a href="#選擇主題theme">選擇主題theme</a></li>
-            <li><a href="#建立本機運行的hugo網站">建立本機運行的Hugo網站</a></li>
-            <li><a href="#結語">結語</a></li>
-            <li><a href="#參考連結">參考連結</a></li>
-          </ol>
-        </li>
-      </ol>
-    </li>
-  </ol>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
-            <main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            <a href="/categories/hugo/" >
-                Hugo
-            </a>
-        
-            <a href="/categories/windows/" >
-                Windows
-            </a>
-        
-    </header>
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/posts/b1-to-install-hugo-on-windows/">在Windows中安裝Hugo</a>
-        </h2>
-    
-        
-        <h3 class="article-subtitle">
-            搭建一個簡易的Blog的工具Hugo，學習在Windows中安裝Hugo
-        </h3>
-        
-    </div>
-
-    
-    
-    
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Dec 17, 2022</time>
-            </div>
-        
-
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    閱讀時間: 1 分鐘
-                </time>
-            </div>
-        
-    </footer>
-    
-
-    
-</div>
-
-</header>
-
-    <section class="article-content">
-    
-    
-    <h3 id="前言">前言</h3>
-<p>其實之前有想過，想找個地方來記錄自己做過的或者研究過的東西，後來看到黑大的文章Hugo，
-就花點時間來研究一下，順便一邊紀錄XD。</p>
-<h3 id="安裝步驟">安裝步驟</h3>
-<blockquote>
-<h4 id="windows-node-安裝">Windows Node 安裝</h4>
-<p>首先可以到Node的官方網站<a class="link" href="https://nodejs.org/zh-tw/download/"  target="_blank" rel="noopener"
-    >下載</a>安裝檔，
+<!doctype html><html lang=zh-tw dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="搭建一個簡易的Blog的工具Hugo，學習在Windows中安裝Hugo"><meta name=keywords content="Hugo,Windows,Install"><title>在Windows中安裝Hugo</title><link rel=canonical href=https://horace-yeh.github.io/posts/b1-to-install-hugo-on-windows/><link rel=stylesheet href=/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css><meta property="og:title" content="在Windows中安裝Hugo"><meta property="og:description" content="搭建一個簡易的Blog的工具Hugo，學習在Windows中安裝Hugo"><meta property="og:url" content="https://horace-yeh.github.io/posts/b1-to-install-hugo-on-windows/"><meta property="og:site_name" content="想要成為通靈王的阿葉"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="Hugo"><meta property="article:tag" content="Windows"><meta property="article:published_time" content="2022-12-17T10:58:34+08:00"><meta property="article:modified_time" content="2022-12-17T10:58:34+08:00"><meta name=twitter:title content="在Windows中安裝Hugo"><meta name=twitter:description content="搭建一個簡易的Blog的工具Hugo，學習在Windows中安裝Hugo"><link rel="shortcut icon" href=/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.setItem(e,"dark")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切換選單>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/images/58111487.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>想要成為通靈王的阿葉</a></h1><h2 class=site-description>你今天通靈了嗎? 只給標題不給內容的需求只能靠通靈了!</h2></div></header><ol class=social-menu><li><a href=https://github.com/horace-yeh target=_blank title=GitHub rel=me><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li></ol><ol class=menu id=main-menu><div class=menu-bottom-section></div></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目錄</h2><div class=widget--toc><nav id=TableOfContents><ol><li><ol><li><a href=#前言>前言</a></li><li><a href=#安裝步驟>安裝步驟</a><ol><li><a href=#windows-node-安裝>Windows Node 安裝</a></li><li><a href=#chocolatey-安裝>Chocolatey 安裝</a></li><li><a href=#hugo-安裝>Hugo 安裝</a></li><li><a href=#選擇主題theme>選擇主題theme</a></li><li><a href=#建立本機運行的hugo網站>建立本機運行的Hugo網站</a></li><li><a href=#結語>結語</a></li><li><a href=#參考連結>參考連結</a></li></ol></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/hugo/>Hugo</a>
+<a href=/categories/windows/>Windows</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/b1-to-install-hugo-on-windows/>在Windows中安裝Hugo</a></h2><h3 class=article-subtitle>搭建一個簡易的Blog的工具Hugo，學習在Windows中安裝Hugo</h3></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Dec 17, 2022</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>閱讀時間: 1 分鐘</time></div></footer></div></header><section class=article-content><h3 id=前言>前言</h3><p>其實之前有想過，想找個地方來記錄自己做過的或者研究過的東西，後來看到黑大的文章Hugo，
+就花點時間來研究一下，順便一邊紀錄XD。</p><h3 id=安裝步驟>安裝步驟</h3><blockquote><h4 id=windows-node-安裝>Windows Node 安裝</h4><p>首先可以到Node的官方網站<a class=link href=https://nodejs.org/zh-tw/download/ target=_blank rel=noopener>下載</a>安裝檔，
 如果有安裝過node，但是版本太舊可以移除後更新，移除時還需要把npm的cache一起清除，
 不然npm安裝的版本會異常，cache通常會在C:\Users[UserName]\AppData\Roaming，
-資料夾裡會有 npm 、npm cache的資料夾都需要刪除。</p>
-<p>安裝完畢後，可以使用下方指令確認版本</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-postscript" data-lang="postscript"><span class="line"><span class="cl"><span class="nf">npm</span> <span class="nf">-v</span>
-</span></span><span class="line"><span class="cl"><span class="nf">node</span> <span class="nf">-v</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<blockquote>
-<h4 id="chocolatey-安裝">Chocolatey 安裝</h4>
-<p>一樣到官網的<a class="link" href="https://chocolatey.org/install"  target="_blank" rel="noopener"
-    >安裝頁面</a>，
+資料夾裡會有 npm 、npm cache的資料夾都需要刪除。</p><p>安裝完畢後，可以使用下方指令確認版本</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-postscript data-lang=postscript><span class=line><span class=cl><span class=nf>npm</span> <span class=nf>-v</span>
+</span></span><span class=line><span class=cl><span class=nf>node</span> <span class=nf>-v</span>
+</span></span></code></pre></td></tr></table></div></div></blockquote><blockquote><h4 id=chocolatey-安裝>Chocolatey 安裝</h4><p>一樣到官網的<a class=link href=https://chocolatey.org/install target=_blank rel=noopener>安裝頁面</a>，
 如果不想看也可以直接打開Power Shell使用指令來進行安裝，
-請記得使用Admin的權限啟動Power Shell。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-postscript" data-lang="postscript"><span class="line"><span class="cl"><span class="nf">Set-ExecutionPolicy</span> <span class="nf">Bypass</span> <span class="nf">-Scope</span> <span class="nf">Process</span> <span class="nf">-Force;</span> <span class="p">[</span><span class="nf">System.Net.ServicePointManager</span><span class="p">]</span><span class="nf">::SecurityProtocol</span> <span class="nf">=</span> <span class="p">[</span><span class="nf">System.Net.ServicePointManager</span><span class="p">]</span><span class="nf">::SecurityProtocol</span> <span class="nf">-bor</span> <span class="nf">3072;</span> <span class="nf">iex</span> <span class="s">((New-Object System.Net.WebClient).DownloadString(&#39;https://community.chocolatey.org/install.ps1&#39;))</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<blockquote>
-<h4 id="hugo-安裝">Hugo 安裝</h4>
-<p>打開powershell，一樣是Admin的權限輸入指令</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-postscript" data-lang="postscript"><span class="line"><span class="cl"><span class="nf">choco</span> <span class="nf">install</span> <span class="nf">hugo</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>在提供一組是包含擴充的安裝指令，這邊提供是因為有些theme需要有擴充才能運行</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-postscript" data-lang="postscript"><span class="line"><span class="cl"><span class="nf">choco</span> <span class="nf">install</span> <span class="nf">hugo-extended</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>確認安裝版本</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-postscript" data-lang="postscript"><span class="line"><span class="cl"><span class="nf">choco</span> <span class="nf">hugo</span> <span class="nf">version</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div></blockquote>
-<blockquote>
-<h4 id="選擇主題theme">選擇主題theme</h4>
-<p>我們可以到<a class="link" href="https://themes.gohugo.io/"  target="_blank" rel="noopener"
-    >官網這裡</a>選擇，
-我選擇的是<a class="link" href="https://themes.gohugo.io/themes/hugo-theme-stack/"  target="_blank" rel="noopener"
-    >hugo-theme-stack</a>，
-這個主題需要安裝的是hugo extended版本，不然local會無法運行。</p>
-</blockquote>
-<blockquote>
-<h4 id="建立本機運行的hugo網站">建立本機運行的Hugo網站</h4>
-<p>起手式打開Power Shell，先切換到想要放置網站檔案的路徑，接著執行指令，
-[Folder Name] 這區塊請替換成自己想要建立的資料夾名稱。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-postscript" data-lang="postscript"><span class="line"><span class="cl"><span class="nf">hugo</span> <span class="nf">new</span> <span class="nf">site</span> <span class="p">[</span><span class="nf">Folder</span> <span class="nf">Name</span><span class="p">]</span> 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>接著我們來複製要使用的主題到Hugo網站裡，這邊使用的是git來處理，當然想要直接複製檔案也可以，
-使用剛剛的Power Shell先進入剛設定的Folder中，接著使用指令</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-postscript" data-lang="postscript"><span class="line"><span class="cl"><span class="nf">git</span> <span class="nf">clone</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/github.com/CaiJimmy/hugo-theme-stack.git</span> <span class="nf">themes</span><span class="nv">/hugo-theme-stack</span>
-</span></span><span class="line"><span class="cl"><span class="nf">git</span> <span class="nf">submodule</span> <span class="nf">add</span> <span class="nf">git:</span><span class="err">/</span><span class="nv">/github.com/CaiJimmy/hugo-theme-stack</span><span class="err">/</span> <span class="nf">themes</span><span class="nv">/hugo-theme-stack</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>簡單說明一下，第一個指令是複製主題，第二個是將複製的主題當作類似套件的感覺，也綁到git上，
+請記得使用Admin的權限啟動Power Shell。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-postscript data-lang=postscript><span class=line><span class=cl><span class=nf>Set-ExecutionPolicy</span> <span class=nf>Bypass</span> <span class=nf>-Scope</span> <span class=nf>Process</span> <span class=nf>-Force;</span> <span class=p>[</span><span class=nf>System.Net.ServicePointManager</span><span class=p>]</span><span class=nf>::SecurityProtocol</span> <span class=nf>=</span> <span class=p>[</span><span class=nf>System.Net.ServicePointManager</span><span class=p>]</span><span class=nf>::SecurityProtocol</span> <span class=nf>-bor</span> <span class=nf>3072;</span> <span class=nf>iex</span> <span class=s>((New-Object System.Net.WebClient).DownloadString(&#39;https://community.chocolatey.org/install.ps1&#39;))</span>
+</span></span></code></pre></td></tr></table></div></div></blockquote><blockquote><h4 id=hugo-安裝>Hugo 安裝</h4><p>打開powershell，一樣是Admin的權限輸入指令</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-postscript data-lang=postscript><span class=line><span class=cl><span class=nf>choco</span> <span class=nf>install</span> <span class=nf>hugo</span>
+</span></span></code></pre></td></tr></table></div></div><p>在提供一組是包含擴充的安裝指令，這邊提供是因為有些theme需要有擴充才能運行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-postscript data-lang=postscript><span class=line><span class=cl><span class=nf>choco</span> <span class=nf>install</span> <span class=nf>hugo-extended</span>
+</span></span></code></pre></td></tr></table></div></div><p>確認安裝版本</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-postscript data-lang=postscript><span class=line><span class=cl><span class=nf>choco</span> <span class=nf>hugo</span> <span class=nf>version</span>
+</span></span></code></pre></td></tr></table></div></div></blockquote><blockquote><h4 id=選擇主題theme>選擇主題theme</h4><p>我們可以到<a class=link href=https://themes.gohugo.io/ target=_blank rel=noopener>官網這裡</a>選擇，
+我選擇的是<a class=link href=https://themes.gohugo.io/themes/hugo-theme-stack/ target=_blank rel=noopener>hugo-theme-stack</a>，
+這個主題需要安裝的是hugo extended版本，不然local會無法運行。</p></blockquote><blockquote><h4 id=建立本機運行的hugo網站>建立本機運行的Hugo網站</h4><p>起手式打開Power Shell，先切換到想要放置網站檔案的路徑，接著執行指令，
+[Folder Name] 這區塊請替換成自己想要建立的資料夾名稱。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-postscript data-lang=postscript><span class=line><span class=cl><span class=nf>hugo</span> <span class=nf>new</span> <span class=nf>site</span> <span class=p>[</span><span class=nf>Folder</span> <span class=nf>Name</span><span class=p>]</span> 
+</span></span></code></pre></td></tr></table></div></div><p>接著我們來複製要使用的主題到Hugo網站裡，這邊使用的是git來處理，當然想要直接複製檔案也可以，
+使用剛剛的Power Shell先進入剛設定的Folder中，接著使用指令</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-postscript data-lang=postscript><span class=line><span class=cl><span class=nf>git</span> <span class=nf>clone</span> <span class=nf>https:</span><span class=err>/</span><span class=nv>/github.com/CaiJimmy/hugo-theme-stack.git</span> <span class=nf>themes</span><span class=nv>/hugo-theme-stack</span>
+</span></span><span class=line><span class=cl><span class=nf>git</span> <span class=nf>submodule</span> <span class=nf>add</span> <span class=nf>git:</span><span class=err>/</span><span class=nv>/github.com/CaiJimmy/hugo-theme-stack</span><span class=err>/</span> <span class=nf>themes</span><span class=nv>/hugo-theme-stack</span>
+</span></span></code></pre></td></tr></table></div></div><p>簡單說明一下，第一個指令是複製主題，第二個是將複製的主題當作類似套件的感覺，也綁到git上，
 接著我們來做簡單的設定，要處理的是設定檔是檔名是config.toml，其實可以讀取的格式不只toml，還有
-yaml跟json，這邊使用的是yaml，我們來簡單設定一下，</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># 網站網址</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">baseurl</span><span class="p">:</span><span class="w"> </span><span class="l">https://www.google.com.tw/</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># 語系</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">languageCode</span><span class="p">:</span><span class="w"> </span><span class="l">zh-tw</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># 主題</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">theme</span><span class="p">:</span><span class="w"> </span><span class="l">hugo-theme-stack</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># 首頁文章顯示數量</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">paginate</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># 網站名稱</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l">我是網站名稱</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>重頭戲來了，我們來啟動看看Hugo的網站吧，一樣的打開power shell，切到剛剛設定的Folder中執行指令</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-postscript" data-lang="postscript"><span class="line"><span class="cl"><span class="nf">hugo</span> <span class="nf">server</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>預設啟動的連結http://localhost:1313/，可以直接在瀏覽器打開，
-如果power shell執行指令後出現版本不支援的錯誤，請安裝hugo extended版本。</p>
-</blockquote>
-<blockquote>
-<h4 id="結語">結語</h4>
-<p>在這裡簡單做了Hugo的安裝以及初步運行，當然還離架站還有一段距離，後續有時間會持續更新。</p>
-</blockquote>
-<blockquote>
-<h4 id="參考連結">參考連結</h4>
-<ul>
-<li><a class="link" href="https://gohugo.io/"  target="_blank" rel="noopener"
-    >Hugo</a></li>
-<li><a class="link" href="https://stack.jimmycai.com/"  target="_blank" rel="noopener"
-    >hugo theme stack</a></li>
-<li><a class="link" href="https://hugo-for-newbie.kejyun.com/theme/blog/stack/config/"  target="_blank" rel="noopener"
-    >超詳細的Hugo config設定說明</a></li>
-<li><a class="link" href="https://support.codebasehq.com/articles/tips-tricks/syntax-highlighting-in-markdown"  target="_blank" rel="noopener"
-    >markdown</a></li>
-</ul>
-</blockquote>
-
-</section>
-
-
-    <footer class="article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/hugo/">Hugo</a>
-        
-            <a href="/tags/windows/">Windows</a>
-        
-    </section>
-
-
-    
-    <section class="article-copyright">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
-</svg>
-
-
-
-        <span>Licensed under CC BY-NC-SA 4.0</span>
-    </section>
-    </footer>
-
-
-    
-</article>
-
-    
-
-    
-
-     
-    
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-        2022 想要成為通靈王的阿葉
-    </section>
-    
-    <section class="powerby">
-        
-            All rights reserved，未經允許不得隨意轉載 <br/>
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.16.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
-    </section>
-</footer>
-
-
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    
-    <div class="pswp__bg"></div>
-
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
-            >
-
-            </main>
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
-                
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-
-    </body>
-</html>
+yaml跟json，這邊使用的是yaml，我們來簡單設定一下，</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># 網站網址</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>baseurl</span><span class=p>:</span><span class=w> </span><span class=l>https://www.google.com.tw/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 語系</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>languageCode</span><span class=p>:</span><span class=w> </span><span class=l>zh-tw</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 主題</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>theme</span><span class=p>:</span><span class=w> </span><span class=l>hugo-theme-stack</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 首頁文章顯示數量</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>paginate</span><span class=p>:</span><span class=w> </span><span class=m>20</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 網站名稱</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>title</span><span class=p>:</span><span class=w> </span><span class=l>我是網站名稱</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>重頭戲來了，我們來啟動看看Hugo的網站吧，一樣的打開power shell，切到剛剛設定的Folder中執行指令</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-postscript data-lang=postscript><span class=line><span class=cl><span class=nf>hugo</span> <span class=nf>server</span>
+</span></span></code></pre></td></tr></table></div></div><p>預設啟動的連結http://localhost:1313/，可以直接在瀏覽器打開，
+如果power shell執行指令後出現版本不支援的錯誤，請安裝hugo extended版本。</p></blockquote><blockquote><h4 id=結語>結語</h4><p>在這裡簡單做了Hugo的安裝以及初步運行，當然還離架站還有一段距離，後續有時間會持續更新。</p></blockquote><blockquote><h4 id=參考連結>參考連結</h4><ul><li><a class=link href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a></li><li><a class=link href=https://stack.jimmycai.com/ target=_blank rel=noopener>hugo theme stack</a></li><li><a class=link href=https://hugo-for-newbie.kejyun.com/theme/blog/stack/config/ target=_blank rel=noopener>超詳細的Hugo config設定說明</a></li><li><a class=link href=https://support.codebasehq.com/articles/tips-tricks/syntax-highlighting-in-markdown target=_blank rel=noopener>markdown</a></li></ul></blockquote></section><footer class=article-footer><section class=article-tags><a href=/tags/hugo/>Hugo</a>
+<a href=/tags/windows/>Windows</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><section class=copyright>&copy;
+2022 想要成為通靈王的阿葉</section><section class=powerby>All rights reserved，未經允許不得隨意轉載<br>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.16.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

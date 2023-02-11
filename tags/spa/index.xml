@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SPA on 想要成為通靈王的阿葉</title><link>https://horace-yeh.github.io/tags/spa/</link><description>Recent content in SPA on 想要成為通靈王的阿葉</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 11 Feb 2023 22:48:32 +0800</lastBuildDate><atom:link href="https://horace-yeh.github.io/tags/spa/index.xml" rel="self" type="application/rss+xml"/><item><title>建立ASP.NET Core與Vue3的SPA專案</title><link>https://horace-yeh.github.io/posts/b3-dotnet-core-vue3-spa-guide/</link><pubDate>Sat, 11 Feb 2023 22:48:32 +0800</pubDate><guid>https://horace-yeh.github.io/posts/b3-dotnet-core-vue3-spa-guide/</guid><description>&lt;h3 id="前言">前言&lt;/h3>
+&lt;p>由於前端Framework日新月異，剛好看到了Vue3，不過本身比較偏向於後端開發，又手癢想要用，
+就來研究一下如何整合，Visual Studio 2022目前只有內建React、Angular的SPA整合專案範例，
+就是沒有Vue的，動手來做一個也方便以後的自己來參考。&lt;/p>
+&lt;h3 id="流程">流程&lt;/h3>
+&lt;blockquote>
+&lt;h4 id="建立一個react-spa專案">建立一個React SPA專案&lt;/h4>
+&lt;p>步驟很簡單打開Visual Studio 2022，選擇建立新專案，接著專案類型選擇Web，
+裡面有一個搭配 React.js的ASP.NET Core的專案範本，就選它，
+然後設定想要的專案名稱，就可以建立了，SDK的選擇，剛好有NET 7就先用最新的，
+在這邊專案先命名為dotnet7vue3SpaSimple方便識別。&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;h4 id="vue3前端專案建立">Vue3前端專案建立&lt;/h4>
+&lt;p>這邊有一些前置條件喔，請先安裝好Node.js，版本需要 &amp;gt; 16，這是Vue3的要求，
+接著我們進到dotnet7vue3SpaSimple專案資料夾裡，會看到ClientApp資料夾，將它刪除，
+然後需要下點指令了，可以使用vs code或者是windows terminal，這邊使用windows terminal，
+首先將路徑切到dotnet7vue3SpaSimple專案的資料夾，看得到被刪除的ClientApp資料夾的那一層，
+因為接下來要使用Vue在建立一個ClientApp的前端專案，使用vue官網推薦的指令來建立吧。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-postscript" data-lang="postscript">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">npm&lt;/span> &lt;span class="nf">init&lt;/span> &lt;span class="nf">vue@latest&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>接著會看到的是否允許安裝create-vue@3.5.0，裝下去就對了。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-postscript" data-lang="postscript">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Need&lt;/span> &lt;span class="nf">to&lt;/span> &lt;span class="nf">install&lt;/span> &lt;span class="nf">the&lt;/span> &lt;span class="nf">following&lt;/span> &lt;span class="nf">packages:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">create-vue@3.5.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Ok&lt;/span> &lt;span class="nf">to&lt;/span> &lt;span class="nf">proceed?&lt;/span> &lt;span class="s">(y)&lt;/span> &lt;span class="nf">y&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>接著會陸續提問，想建立的前端專案名稱以及相關設定，Project name請使用ClientApp。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-postscript" data-lang="postscript">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">✔&lt;/span> &lt;span class="nf">Project&lt;/span> &lt;span class="nf">name:&lt;/span> &lt;span class="nf">…&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nf">your-project-name&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">✔&lt;/span> &lt;span class="nf">Add&lt;/span> &lt;span class="nf">TypeScript?&lt;/span> &lt;span class="nf">…&lt;/span> &lt;span class="nf">No&lt;/span> &lt;span class="err">/&lt;/span> &lt;span class="nf">Yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">✔&lt;/span> &lt;span class="nf">Add&lt;/span> &lt;span class="nf">JSX&lt;/span> &lt;span class="nf">Support?&lt;/span> &lt;span class="nf">…&lt;/span> &lt;span class="nf">No&lt;/span> &lt;span class="err">/&lt;/span> &lt;span class="nf">Yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">✔&lt;/span> &lt;span class="nf">Add&lt;/span> &lt;span class="nf">Vue&lt;/span> &lt;span class="nf">Router&lt;/span> &lt;span class="nf">for&lt;/span> &lt;span class="nf">Single&lt;/span> &lt;span class="nf">Page&lt;/span> &lt;span class="nf">Application&lt;/span> &lt;span class="nf">development?&lt;/span> &lt;span class="nf">…&lt;/span> &lt;span class="nf">No&lt;/span> &lt;span class="err">/&lt;/span> &lt;span class="nf">Yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">✔&lt;/span> &lt;span class="nf">Add&lt;/span> &lt;span class="nf">Pinia&lt;/span> &lt;span class="nf">for&lt;/span> &lt;span class="nf">state&lt;/span> &lt;span class="nf">management?&lt;/span> &lt;span class="nf">…&lt;/span> &lt;span class="nf">No&lt;/span> &lt;span class="err">/&lt;/span> &lt;span class="nf">Yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">✔&lt;/span> &lt;span class="nf">Add&lt;/span> &lt;span class="nf">Vitest&lt;/span> &lt;span class="nf">for&lt;/span> &lt;span class="nf">Unit&lt;/span> &lt;span class="nf">testing?&lt;/span> &lt;span class="nf">…&lt;/span> &lt;span class="nf">No&lt;/span> &lt;span class="err">/&lt;/span> &lt;span class="nf">Yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">✔&lt;/span> &lt;span class="nf">Add&lt;/span> &lt;span class="nf">Cypress&lt;/span> &lt;span class="nf">for&lt;/span> &lt;span class="nf">both&lt;/span> &lt;span class="nf">Unit&lt;/span> &lt;span class="nf">and&lt;/span> &lt;span class="nf">End-to-End&lt;/span> &lt;span class="nf">testing?&lt;/span> &lt;span class="nf">…&lt;/span> &lt;span class="nf">No&lt;/span> &lt;span class="err">/&lt;/span> &lt;span class="nf">Yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">✔&lt;/span> &lt;span class="nf">Add&lt;/span> &lt;span class="nf">ESLint&lt;/span> &lt;span class="nf">for&lt;/span> &lt;span class="nf">code&lt;/span> &lt;span class="nf">quality?&lt;/span> &lt;span class="nf">…&lt;/span> &lt;span class="nf">No&lt;/span> &lt;span class="err">/&lt;/span> &lt;span class="nf">Yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">✔&lt;/span> &lt;span class="nf">Add&lt;/span> &lt;span class="nf">Prettier&lt;/span> &lt;span class="nf">for&lt;/span> &lt;span class="nf">code&lt;/span> &lt;span class="nf">formatting?&lt;/span> &lt;span class="nf">…&lt;/span> &lt;span class="nf">No&lt;/span> &lt;span class="err">/&lt;/span> &lt;span class="nf">Yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Scaffolding&lt;/span> &lt;span class="nf">project&lt;/span> &lt;span class="nf">in&lt;/span> &lt;span class="nf">.&lt;/span>&lt;span class="err">/&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nf">your-project-name&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nf">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Done.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>接著會出現提示指令，先做cd ClientApp跟npm install這兩個就好。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-postscript" data-lang="postscript">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Scaffolding&lt;/span> &lt;span class="nf">project&lt;/span> &lt;span class="nf">in&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nf">your-project-path&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Done.&lt;/span> &lt;span class="nf">Now&lt;/span> &lt;span class="nf">run:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">cd&lt;/span> &lt;span class="nf">ClientApp&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">npm&lt;/span> &lt;span class="nf">install&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">npm&lt;/span> &lt;span class="nf">run&lt;/span> &lt;span class="nf">dev&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/blockquote>
+&lt;blockquote>
+&lt;h4 id="dotnet-core-spaproxy設定">Dotnet Core SpaProxy設定&lt;/h4>
+&lt;p>打開dotnet7vue3SpaSimple的.csproj檔案，需要進行一些設定的調整，
+首先是設定vite啟動指令將npm start替換成npm run dev，沒錯就是剛剛的第三行指令。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;SpaProxyLaunchCommand&amp;gt;&lt;/span>npm run dev&lt;span class="nt">&amp;lt;/SpaProxyLaunchCommand&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>接著紀錄一下，SpaProxyServerUrl裡面所使用的Port，稍後設定vite會使用到。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;SpaProxyServerUrl&amp;gt;&lt;/span>https://localhost:44417&lt;span class="nt">&amp;lt;/SpaProxyServerUrl&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/blockquote>
+&lt;blockquote>
+&lt;h4 id="https設定">https設定&lt;/h4>
+&lt;p>在建立dotnet7vue3SpaSimple如果有勾選https，需要再安裝一個套件，
+先回到windows terminal，安裝套件makecert。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-postscript" data-lang="postscript">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">npm&lt;/span> &lt;span class="nf">install&lt;/span> &lt;span class="nf">--save-dev&lt;/span> &lt;span class="nf">vite-plugin-mkcert&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/blockquote>
+&lt;blockquote>
+&lt;h4 id="vite設定">vite設定&lt;/h4>
+&lt;p>到ClientApp資料夾中，打開vite.config.js這個檔案，會看到下方的內容。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-js" data-lang="js">&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">fileURLToPath&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">URL&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;node:url&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">defineConfig&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;vite&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="nx">vue&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@vitejs/plugin-vue&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// https://vitejs.dev/config/
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="nx">defineConfig&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">plugins&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="nx">vue&lt;/span>&lt;span class="p">()],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">resolve&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">alias&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;@&amp;#39;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">fileURLToPath&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="nx">URL&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;./src&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kr">import&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">meta&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">url&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>接著要進行調整，首先是增加https的套件，接著設定server，
+port部分使用SpaProxyServerUrl中的port，server中的proxy，
+是用來對應後端的web api，將前端的/api都往指定的網址導向，
+所以target肯定就是設定dotnet core專案啟動時的url，
+所以我們到dotnet7vue3SpaSimple專案，裡面有一個launchSettings.json，
+這邊運行使用profiles，所以就是applicationUrl裡面有https的url，
+https://localhost:7208來當作target。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">{
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;iisSettings&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;windowsAuthentication&amp;#34;: false,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;anonymousAuthentication&amp;#34;: true,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;iisExpress&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;applicationUrl&amp;#34;: &amp;#34;http://localhost:45250&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;sslPort&amp;#34;: 44338
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> },
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;profiles&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;dotnet7vue3SpaSimple&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;commandName&amp;#34;: &amp;#34;Project&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;launchBrowser&amp;#34;: true,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;applicationUrl&amp;#34;: &amp;#34;https://localhost:7208;http://localhost:5253&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;environmentVariables&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;ASPNETCORE_ENVIRONMENT&amp;#34;: &amp;#34;Development&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;ASPNETCORE_HOSTINGSTARTUPASSEMBLIES&amp;#34;: &amp;#34;Microsoft.AspNetCore.SpaProxy&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> },
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;IIS Express&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;commandName&amp;#34;: &amp;#34;IISExpress&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;launchBrowser&amp;#34;: true,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;environmentVariables&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;ASPNETCORE_ENVIRONMENT&amp;#34;: &amp;#34;Development&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;ASPNETCORE_HOSTINGSTARTUPASSEMBLIES&amp;#34;: &amp;#34;Microsoft.AspNetCore.SpaProxy&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>最後設定完的vite.config.js如下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-js" data-lang="js">&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">fileURLToPath&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">URL&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;node:url&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">defineConfig&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;vite&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="nx">vue&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@vitejs/plugin-vue&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="nx">mkcert&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;vite-plugin-mkcert&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// https://vitejs.dev/config/
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="nx">defineConfig&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">plugins&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="nx">vue&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="nx">mkcert&lt;/span>&lt;span class="p">()],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">server&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">port&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">44417&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">https&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">strictPort&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">proxy&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;/api&amp;#39;&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">target&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;https://localhost:7208&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">changeOrigin&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">secure&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">rewrite&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">path&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="nx">path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/^\/api/&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;/api&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">resolve&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">alias&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;@&amp;#39;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">fileURLToPath&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="nx">URL&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;./src&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kr">import&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">meta&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">url&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/blockquote>
+&lt;blockquote>
+&lt;h4 id="啟動專案">啟動專案&lt;/h4>
+&lt;p>現在我們可以用visual studio 2022 開啟dotnet7vue3SpaSimple，
+F5按下去，就可以啟動了，還會有一個vite啟動的command line出現，
+最後就會看到vue3前端專案啟動了。&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="小結">小結&lt;/h3>
+&lt;p>這裡使用ASP.NET Core加上Vue3建立一個SPA專案，雖然設定有些繁瑣，
+給未來的自己跟其他需要的人留下建立紀錄，其實就是怕自己忘光XD，
+還有就是vite啟動真的超快，有感提升開發體驗，
+建立的專案範例下方有參考連結。&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/horace-yeh/dotnet7vue3SpaSimple" target="_blank" rel="noopener"
+>GitHub Simple&lt;/a>&lt;/p>
+&lt;h3 id="參考連結">參考連結&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://vuejs.org//guide/quick-start.html#creating-a-vue-application" target="_blank" rel="noopener"
+>Vue 3 quick-start&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/keithn/dotnetviteguide" target="_blank" rel="noopener"
+>A guide to getting started with ASP.NET Core 6, Vite, and Vue 3&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://ithelp.ithome.com.tw/articles/10291740" target="_blank" rel="noopener"
+>真的好想離開 Vue 3 新手村&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

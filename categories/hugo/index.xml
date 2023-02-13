@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo on 想要成為通靈王的阿葉</title><link>https://horace-yeh.github.io/categories/hugo/</link><description>Recent content in Hugo on 想要成為通靈王的阿葉</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 07 Jan 2023 11:26:06 +0800</lastBuildDate><atom:link href="https://horace-yeh.github.io/categories/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo使用Github Actions自動佈署</title><link>https://horace-yeh.github.io/posts/b2-hugo-github-ci-cd/</link><pubDate>Sat, 07 Jan 2023 11:26:06 +0800</pubDate><guid>https://horace-yeh.github.io/posts/b2-hugo-github-ci-cd/</guid><description>&lt;h3 id="前言">前言&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo on 想要成為通靈王的阿葉</title><link>https://horace-yeh.github.io/categories/hugo/</link><description>Recent content in Hugo on 想要成為通靈王的阿葉</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 07 Jan 2023 11:26:06 +0800</lastBuildDate><atom:link href="https://horace-yeh.github.io/categories/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo使用Github Actions自動佈署</title><link>https://horace-yeh.github.io/article/202301/b2-hugo-github-ci-cd/</link><pubDate>Sat, 07 Jan 2023 11:26:06 +0800</pubDate><guid>https://horace-yeh.github.io/article/202301/b2-hugo-github-ci-cd/</guid><description>&lt;h3 id="前言">前言&lt;/h3>
 &lt;p>建立好簡易的Hugo網站後，就會想著怎樣做，可以寫完就可以更新文章，
 沒錯寫文章就很累了怎麼可能，還要自己處理部屬這件事情呢，
 來研究一下怎樣透過Github Actions來處理佈署&lt;/p>
@@ -25,7 +25,7 @@
 &lt;ul>
 &lt;li>&lt;a class="link" href="https://sujingjhong.com/posts/how-to-deploy-hugo-automatically-with-github-actions/" target="_blank" rel="noopener"
 >如何使用 Github Actions 自動部署 Hugo&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>在Windows中安裝Hugo</title><link>https://horace-yeh.github.io/posts/b1-to-install-hugo-on-windows/</link><pubDate>Sat, 17 Dec 2022 10:58:34 +0800</pubDate><guid>https://horace-yeh.github.io/posts/b1-to-install-hugo-on-windows/</guid><description>&lt;h3 id="前言">前言&lt;/h3>
+&lt;/ul></description></item><item><title>在Windows中安裝Hugo</title><link>https://horace-yeh.github.io/article/202212/b1-to-install-hugo-on-windows/</link><pubDate>Sat, 17 Dec 2022 10:58:34 +0800</pubDate><guid>https://horace-yeh.github.io/article/202212/b1-to-install-hugo-on-windows/</guid><description>&lt;h3 id="前言">前言&lt;/h3>
 &lt;p>其實之前有想過，想找個地方來記錄自己做過的或者研究過的東西，後來看到黑大的文章Hugo，
 就花點時間來研究一下，順便一邊紀錄XD。&lt;/p>
 &lt;h3 id="安裝步驟">安裝步驟&lt;/h3>

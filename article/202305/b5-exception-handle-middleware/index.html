@@ -1,0 +1,139 @@
+<!doctype html><html lang=zh-tw dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="簡單在Dotnet Core WebApi中實作全域錯誤處理，使用Middleware進行處理，並且擷取Request帶入的資料"><meta name=keywords content="Dotnet Core,NET 7,Exception Handle,Middleware"><title>Dotnet Core WebApi Exception Handle Middleware</title><link rel=canonical href=https://horace-yeh.github.io/article/202305/b5-exception-handle-middleware/><link rel=stylesheet href=/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css><meta property="og:title" content="Dotnet Core WebApi Exception Handle Middleware"><meta property="og:description" content="簡單在Dotnet Core WebApi中實作全域錯誤處理，使用Middleware進行處理，並且擷取Request帶入的資料"><meta property="og:url" content="https://horace-yeh.github.io/article/202305/b5-exception-handle-middleware/"><meta property="og:site_name" content="想要成為通靈王的阿葉"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="Dotnet Core"><meta property="article:tag" content="NET 7"><meta property="article:tag" content="Exception Handle"><meta property="article:tag" content="Middleware"><meta property="article:published_time" content="2023-05-16T22:31:01+08:00"><meta property="article:modified_time" content="2023-05-16T22:31:01+08:00"><meta name=twitter:title content="Dotnet Core WebApi Exception Handle Middleware"><meta name=twitter:description content="簡單在Dotnet Core WebApi中實作全域錯誤處理，使用Middleware進行處理，並且擷取Request帶入的資料"><link rel="shortcut icon" href=/favicon.ico><script async src="https://www.googletagmanager.com/gtag/js?id=G-FT0J29XKPG"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-FT0J29XKPG",{anonymize_ip:!1})}</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.setItem(e,"dark")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切換選單>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/images/58111487.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>想要成為通靈王的阿葉</a></h1><h2 class=site-description>你今天通靈了嗎? 只給標題不給內容的需求只能靠通靈了!</h2></div></header><ol class=social-menu><li><a href=https://github.com/horace-yeh target=_blank title=GitHub rel=me><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li></ol><ol class=menu id=main-menu><div class=menu-bottom-section></div></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目錄</h2><div class=widget--toc><nav id=TableOfContents><ol><li><ol><li><a href=#前言>前言</a></li><li><a href=#思考作法>思考作法</a></li><li><a href=#作法>作法</a><ol><li><a href=#建立exceptionhandlemiddleware>建立ExceptionHandleMiddleware</a></li></ol></li><li><a href=#說明>說明</a></li><li><a href=#參考連結>參考連結</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/dotnet-core/>Dotnet Core</a>
+<a href=/categories/net-7/>NET 7</a>
+<a href=/categories/exception-handle/>Exception Handle</a>
+<a href=/categories/middleware/>Middleware</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/article/202305/b5-exception-handle-middleware/>Dotnet Core WebApi Exception Handle Middleware</a></h2><h3 class=article-subtitle>簡單在Dotnet Core WebApi中實作全域錯誤處理，使用Middleware進行處理，並且擷取Request帶入的資料</h3></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>May 16, 2023</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>閱讀時間: 2 分鐘</time></div></footer></div></header><section class=article-content><h3 id=前言>前言</h3><p>近期支援其他的開發team，剛好遇到一個專案沒有進行錯誤處理，卻又準備上PRD，
+在開發期間develop環境又常常噴莫名其妙的400跟500錯誤，下定決定先搞一個錯誤處理，
+不然上線感覺會炸裂XD。</p><h3 id=思考作法>思考作法</h3><p>錯誤處理，其實有很多方式可以實踐，最簡單又不影響原先程式的做法，一種是Exception Filter，
+不過能夠攔截的錯誤有一些限制，再出現400、500錯誤的世界似乎是不夠使用的，
+所以就變成另一種做法Exception Middleware，來實現我想要的錯誤攔截。</p><h3 id=作法>作法</h3><blockquote><h4 id=建立exceptionhandlemiddleware>建立ExceptionHandleMiddleware</h4><p>首先建立ExceptionHandleMiddleware，廢話不多說直接上code</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-csharp data-lang=csharp><span class=line><span class=cl>   <span class=k>public</span> <span class=k>class</span> <span class=nc>ExceptionHandleMiddleware</span>
+</span></span><span class=line><span class=cl>   <span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=k>private</span> <span class=k>readonly</span> <span class=n>RequestDelegate</span> <span class=n>_next</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=k>private</span> <span class=k>readonly</span> <span class=n>ILogger</span><span class=p>&lt;</span><span class=n>ExceptionHandleMiddleware</span><span class=p>&gt;</span> <span class=n>_logger</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=k>public</span> <span class=n>ExceptionHandleMiddleware</span><span class=p>(</span><span class=n>RequestDelegate</span> <span class=n>next</span><span class=p>,</span> <span class=n>ILogger</span><span class=p>&lt;</span><span class=n>ExceptionHandleMiddleware</span><span class=p>&gt;</span> <span class=n>logger</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=n>_next</span> <span class=p>=</span> <span class=n>next</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=n>_logger</span> <span class=p>=</span> <span class=n>logger</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=cs>/// &lt;summary&gt;</span>
+</span></span><span class=line><span class=cl>       <span class=cs>/// 任務調用</span>
+</span></span><span class=line><span class=cl>       <span class=cs>/// &lt;/summary&gt;</span>
+</span></span><span class=line><span class=cl>       <span class=cs>/// &lt;param name=&#34;context&#34;&gt;HTTP 的上下文&lt;/param&gt;</span>
+</span></span><span class=line><span class=cl>       <span class=cs>/// &lt;returns&gt;&lt;/returns&gt;</span>
+</span></span><span class=line><span class=cl>       <span class=k>public</span> <span class=k>async</span> <span class=n>Task</span> <span class=n>Invoke</span><span class=p>(</span><span class=n>HttpContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 確保 HTTP Request 可以多次讀取</span>
+</span></span><span class=line><span class=cl>           <span class=n>context</span><span class=p>.</span><span class=n>Request</span><span class=p>.</span><span class=n>EnableBuffering</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>           <span class=k>try</span>
+</span></span><span class=line><span class=cl>           <span class=p>{</span>
+</span></span><span class=line><span class=cl>               <span class=k>await</span> <span class=n>_next</span><span class=p>(</span><span class=n>context</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=p>}</span>
+</span></span><span class=line><span class=cl>           <span class=k>catch</span> <span class=p>(</span><span class=n>Exception</span> <span class=n>exception</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>           <span class=p>{</span>
+</span></span><span class=line><span class=cl>               <span class=k>await</span> <span class=n>HandleExceptionAsync</span><span class=p>(</span><span class=n>context</span><span class=p>,</span> <span class=n>exception</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=p>}</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=k>private</span> <span class=n>Task</span> <span class=n>HandleExceptionAsync</span><span class=p>(</span><span class=n>HttpContext</span> <span class=n>context</span><span class=p>,</span> <span class=n>Exception</span> <span class=n>exception</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=kt>var</span> <span class=n>path</span> <span class=p>=</span> <span class=s>$&#34;{context.Request.Path}&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=kt>var</span> <span class=n>method</span> <span class=p>=</span> <span class=s>$&#34;{context.Request.Method}&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=kt>var</span> <span class=n>controllerName</span> <span class=p>=</span> <span class=s>$&#34;{context.Request.RouteValues[&#34;</span><span class=n>controller</span><span class=s>&#34;]}&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=kt>var</span> <span class=n>actionName</span> <span class=p>=</span> <span class=s>$&#34;{context.Request.RouteValues[&#34;</span><span class=n>action</span><span class=s>&#34;]}&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=kt>var</span> <span class=n>env</span> <span class=p>=</span> <span class=s>$&#34;{Environment.GetEnvironmentVariable(&#34;</span><span class=n>ASPNETCORE_ENVIRONMENT</span><span class=s>&#34;)}&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=kt>var</span> <span class=n>body</span> <span class=p>=</span> <span class=n>ReadRequestBody</span><span class=p>(</span><span class=n>context</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>           <span class=n>_logger</span><span class=p>.</span><span class=n>LogError</span><span class=p>(</span><span class=s>&#34;{now} | [{env}]({method}):{path} | {controllerName}-{actionName} | {message} | Data:{body}&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>               <span class=s>$&#34;{DateTime.Now:yyyy-MM-dd HH:mm:ss}&#34;</span><span class=p>,</span> <span class=n>env</span><span class=p>,</span> <span class=n>method</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=n>controllerName</span><span class=p>,</span> <span class=n>actionName</span><span class=p>,</span> <span class=n>exception</span><span class=p>.</span><span class=n>StackTrace</span><span class=p>,</span> <span class=n>body</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>           <span class=n>context</span><span class=p>.</span><span class=n>Response</span><span class=p>.</span><span class=n>ContentType</span> <span class=p>=</span> <span class=s>&#34;application/json&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=n>context</span><span class=p>.</span><span class=n>Response</span><span class=p>.</span><span class=n>StatusCode</span> <span class=p>=</span> <span class=n>StatusCodes</span><span class=p>.</span><span class=n>Status500InternalServerError</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=k>return</span> <span class=n>context</span><span class=p>.</span><span class=n>Response</span><span class=p>.</span><span class=n>WriteAsync</span><span class=p>(</span><span class=s>$&#34;Catch Exception from Middleware : {exception.Message}&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=k>private</span> <span class=k>static</span> <span class=kt>string</span> <span class=n>ReadRequestBody</span><span class=p>(</span><span class=n>HttpContext</span> <span class=n>context</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=k>using</span> <span class=nn>var</span> <span class=n>reader</span> <span class=p>=</span> <span class=k>new</span> <span class=n>StreamReader</span><span class=p>(</span><span class=n>context</span><span class=p>.</span><span class=n>Request</span><span class=p>.</span><span class=n>Body</span><span class=p>,</span> <span class=n>Encoding</span><span class=p>.</span><span class=n>UTF8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 將 HTTP Request 的 Stream 起始位置歸零</span>
+</span></span><span class=line><span class=cl>           <span class=n>context</span><span class=p>.</span><span class=n>Request</span><span class=p>.</span><span class=n>Body</span><span class=p>.</span><span class=n>Seek</span><span class=p>(</span><span class=m>0</span><span class=p>,</span> <span class=n>SeekOrigin</span><span class=p>.</span><span class=n>Begin</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=kt>var</span> <span class=n>body</span> <span class=p>=</span> <span class=n>reader</span><span class=p>.</span><span class=n>ReadToEndAsync</span><span class=p>().</span><span class=n>ConfigureAwait</span><span class=p>(</span><span class=k>false</span><span class=p>).</span><span class=n>GetAwaiter</span><span class=p>().</span><span class=n>GetResult</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 將 HTTP Request 的 Stream 起始位置歸零</span>
+</span></span><span class=line><span class=cl>           <span class=n>context</span><span class=p>.</span><span class=n>Request</span><span class=p>.</span><span class=n>Body</span><span class=p>.</span><span class=n>Seek</span><span class=p>(</span><span class=m>0</span><span class=p>,</span> <span class=n>SeekOrigin</span><span class=p>.</span><span class=n>Begin</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=k>return</span> <span class=n>body</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>   <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div></blockquote><h3 id=說明>說明</h3><p>簡單說明一下，上面code處理了些什麼，Middleware本身像是簽核過程一樣，一層一層往上簽，一個呼叫一個，
+所以當錯誤攔截的Middleware擺在最上層的時候，基本上就是包山包海的狀態，蠻符合我的需求的，所以在裡面包一個簡單的try catch，
+進行錯誤的處理，在這裡的錯誤處理取得了大部分所需的資訊，包含傳入的Request內容，這個部分應該是蠻多錯誤檢查需要使用的資料，
+後面會放上source code的專案範例。</p><h3 id=參考連結>參考連結</h3><ul><li><a class=link href=https://blog.poychang.net/asp-net-core-web-api-global-exception-handler/ target=_blank rel=noopener>在 ASP.NET Core 中使用 Middleware 全域處理例外</a></li><li><a class=link href=https://blog.poychang.net/logging-http-request-in-asp-net-core/ target=_blank rel=noopener>收集 ASP.NET Core 網站所有的 HTTP Request 資訊</a></li><li><a class=link href=https://github.com/horace-yeh/ExceptionHandleSimple target=_blank rel=noopener>GitHub Source Code</a></li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/dotnet-core/>Dotnet Core</a>
+<a href=/tags/net-7/>NET 7</a>
+<a href=/tags/exception-handle/>Exception Handle</a>
+<a href=/tags/middleware/>Middleware</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相關文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/article/202302/b3-dotnet-core-vue3-spa-guide/><div class=article-details><h2 class=article-title>建立ASP.NET Core與Vue3的SPA專案</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2022 -
+2023 想要成為通靈王的阿葉</section><section class=powerby>All rights reserved，未經允許不得隨意轉載<br>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.16.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

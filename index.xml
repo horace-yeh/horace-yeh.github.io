@@ -1,4 +1,290 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>想要成為通靈王的阿葉</title><link>https://horace-yeh.github.io/</link><description>Recent content on 想要成為通靈王的阿葉</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Tue, 16 May 2023 22:31:01 +0800</lastBuildDate><atom:link href="https://horace-yeh.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Dotnet Core WebApi Exception Handle Middleware</title><link>https://horace-yeh.github.io/article/202305/b5-exception-handle-middleware/</link><pubDate>Tue, 16 May 2023 22:31:01 +0800</pubDate><guid>https://horace-yeh.github.io/article/202305/b5-exception-handle-middleware/</guid><description>&lt;h3 id="前言">前言&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>想要成為通靈王的阿葉</title><link>https://horace-yeh.github.io/</link><description>Recent content on 想要成為通靈王的阿葉</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Tue, 17 Sep 2024 09:53:17 +0800</lastBuildDate><atom:link href="https://horace-yeh.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>使用LINQPad快速產生MSSQL中Table的POCO</title><link>https://horace-yeh.github.io/article/202409/b6-mssql-poco-linqpad/</link><pubDate>Tue, 17 Sep 2024 09:53:17 +0800</pubDate><guid>https://horace-yeh.github.io/article/202409/b6-mssql-poco-linqpad/</guid><description>&lt;h3 id="前言">前言&lt;/h3>
+&lt;p>最近需要產生大量的資料表模型(DBModle)，但時常常又會面臨表格修改，環境有些限制所以不是使用EF，所以找了一些產生POCO的方式，搭配LINQPad就可以快速產生對應資料模型。&lt;/p>
+&lt;h3 id="需求">需求&lt;/h3>
+&lt;p>首先其實網路上可以找到不少作法，可以產生出基礎的資料模型，
+但是不太符合我當前的需求，我還想要取得資料表中的描述資訊當作註解，
+方便識別資料模型每一個屬性用途。&lt;/p>
+&lt;h3 id="作法">作法&lt;/h3>
+&lt;blockquote>
+&lt;h4 id="擴充-myextensions">擴充 MyExtensions&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-csharp" data-lang="csharp">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">public&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">MyExtensions&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// Write custom extension methods here. They will be available to all queries.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="n">DumpClass&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span> &lt;span class="n">IDbConnection&lt;/span> &lt;span class="n">connection&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="n">sql&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="p">&amp;gt;&lt;/span>&lt;span class="n">className&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s">&amp;#34;Info&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="kt">string&lt;/span> &lt;span class="n">tableName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s">&amp;#34;Info&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">descDict&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">connection&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">DumpClassDesc&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">tableName&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">connection&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">State&lt;/span> &lt;span class="p">!=&lt;/span> &lt;span class="n">ConnectionState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Open&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">connection&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Open&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">cmd&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">connection&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">CreateCommand&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cmd&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">CommandText&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">sql&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">reader&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">cmd&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ExecuteReader&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">builder&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">StringBuilder&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">reader&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">FieldCount&lt;/span> &lt;span class="p">&amp;lt;=&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">continue&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">descDict&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">TryGetValue&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">tableName&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">out&lt;/span> &lt;span class="n">_&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/// &amp;lt;summary&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">$&amp;#34;/// {descDict[tableName]}&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/// &amp;lt;/summary&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendFormat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;public class {0}{1}&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">className&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Environment&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">NewLine&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;{&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">schema&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">reader&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">GetSchemaTable&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">foreach&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">DataRow&lt;/span> &lt;span class="n">row&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="n">schema&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Rows&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">type&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">Type&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">row&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s">&amp;#34;DataType&amp;#34;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">TypeAliases&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ContainsKey&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">?&lt;/span> &lt;span class="n">TypeAliases&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">type&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Name&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">isNullable&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">bool&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">row&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s">&amp;#34;AllowDBNull&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="p">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">NullableTypes&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Contains&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">collumnName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">row&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s">&amp;#34;ColumnName&amp;#34;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">descDict&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">TryGetValue&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">collumnName&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">out&lt;/span> &lt;span class="n">_&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;\t/// &amp;lt;summary&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">$&amp;#34;\t/// {descDict[collumnName]}&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;\t/// &amp;lt;/summary&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Format&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;\tpublic {0}{1} {2} {{ get; set; }}&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">&amp;gt;&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">isNullable&lt;/span> &lt;span class="p">?&lt;/span> &lt;span class="s">&amp;#34;?&amp;#34;&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Empty&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">collumnName&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//builder.AppendLine();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;}&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">AppendLine&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">reader&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">NextResult&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//關閉連線&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">connection&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Close&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ToString&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">private&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="n">Dictionary&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">DumpClassDesc&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span> &lt;span class="n">IDbConnection&lt;/span> &lt;span class="n">connection&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">&amp;gt;&lt;/span>&lt;span class="kt">string&lt;/span> &lt;span class="n">tableName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s">&amp;#34;Info&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">connection&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">State&lt;/span> &lt;span class="p">!=&lt;/span> &lt;span class="n">ConnectionState&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Open&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">connection&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Open&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">sign&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s">&amp;#34;.&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">defaultDbo&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s">&amp;#34;dbo&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tableName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">tableName&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;[&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="n">Replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;]&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">tableName&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Contains&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sign&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">temp&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">tableName&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sign&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">defaultDbo&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">First&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tableName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Last&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">sql&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s">$@&amp;#34;SELECT objname AS [ColunmName], value AS [Desc]
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> FROM fn_listextendedproperty (NULL, &amp;#39;schema&amp;#39;, &amp;#39;{defaultDbo}&amp;#39;, &amp;#39;table&amp;#39;, &amp;gt;N&amp;#39;{tableName}&amp;#39;, NULL, default)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> WHERE name = &amp;#39;MS_Description&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> AND objtype = &amp;#39;TABLE&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> UNION
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> SELECT objname AS [ColunmName], value AS [Desc]
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> FROM fn_listextendedproperty (NULL, &amp;#39;schema&amp;#39;, &amp;#39;{defaultDbo}&amp;#39;, &amp;#39;table&amp;#39;, &amp;gt;N&amp;#39;{tableName}&amp;#39;, &amp;#39;column&amp;#39;, default)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> WHERE name = &amp;#39;MS_Description&amp;#39; AND objtype = &amp;#39;COLUMN&amp;#39;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">dict&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Dictionary&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">&amp;gt;();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">cmd&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">connection&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">CreateCommand&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cmd&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">CommandText&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">sql&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">reader&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">cmd&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ExecuteReader&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">reader&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Read&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">val&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">reader&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="m">1&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="n">ToString&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="n">Replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;\r\n&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">dict&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">$&amp;#34;{reader[0]}&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">$&amp;#34;{val}&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">reader&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Close&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">Exception&lt;/span> &lt;span class="n">ex&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">WriteLine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ex&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Message&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">connection&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Close&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">dict&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">private&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="k">readonly&lt;/span> &lt;span class="n">Dictionary&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Type&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">string&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">TypeAliases&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Dictionary&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Type&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">&amp;gt;&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;int&amp;#34;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">short&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;short&amp;#34;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">byte&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;byte&amp;#34;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">byte&lt;/span>&lt;span class="p">[]),&lt;/span> &lt;span class="s">&amp;#34;byte[]&amp;#34;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">long&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;long&amp;#34;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">double&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;double&amp;#34;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">decimal&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;decimal&amp;#34;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">float&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;float&amp;#34;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">bool&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;bool&amp;#34;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">string&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="s">&amp;#34;string&amp;#34;&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">private&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="k">readonly&lt;/span> &lt;span class="n">HashSet&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Type&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">NullableTypes&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">HashSet&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">Type&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">short&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">long&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">double&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">decimal&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">float&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">bool&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">typeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">DateTime&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/blockquote>
+&lt;h3 id="demo">Demo&lt;/h3>
+&lt;p>資料庫使用AdventureWorks2022做展示&lt;/p>
+&lt;p>&lt;img src="https://storage01japaneast.blob.core.windows.net/blogfile/20240917/4d95f868-b51d-4a91-871b-9239567d5364.png"
+loading="lazy"
+alt="成果展示"
+>&lt;/p>
+&lt;h3 id="小結">小結&lt;/h3>
+&lt;p>程式碼並沒有寫很漂亮，只是需要產出，有興趣的朋友可以在改寫可以再跟我分享XD，完整程式碼分享放在下方連結中有需要請自取。&lt;/p>
+&lt;h3 id="參考連結">參考連結&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://blog.poychang.net/linqpad-sql-command-class-model/" target="_blank" rel="noopener"
+>使用 LINQPad 快速產生對應 SQL 查詢結果的類別&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/horace-yeh/LINQPadExtensions/blob/main/linq/MsSqlPocoExtensions.linq" target="_blank" rel="noopener"
+>GitHub Source Code&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Dotnet Core WebApi Exception Handle Middleware</title><link>https://horace-yeh.github.io/article/202305/b5-exception-handle-middleware/</link><pubDate>Tue, 16 May 2023 22:31:01 +0800</pubDate><guid>https://horace-yeh.github.io/article/202305/b5-exception-handle-middleware/</guid><description>&lt;h3 id="前言">前言&lt;/h3>
 &lt;p>近期支援其他的開發team，剛好遇到一個專案沒有進行錯誤處理，卻又準備上PRD，
 在開發期間develop環境又常常噴莫名其妙的400跟500錯誤，下定決定先搞一個錯誤處理，
 不然上線感覺會炸裂XD。&lt;/p>
@@ -72,12 +358,12 @@
 &lt;/span>&lt;span class="lnt">58
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-csharp" data-lang="csharp">&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">ExceptionHandleMiddleware&lt;/span>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-csharp" data-lang="csharp">&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">ExceptionHandleMiddleware&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">readonly&lt;/span> &lt;span class="n">RequestDelegate&lt;/span> &lt;span class="n">_next&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">readonly&lt;/span> &lt;span class="n">ILogger&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">ExceptionHandleMiddleware&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">_logger&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">private&lt;/span> &lt;span class="k">readonly&lt;/span> &lt;span class="n">RequestDelegate&lt;/span> &lt;span class="n">_next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">private&lt;/span> &lt;span class="k">readonly&lt;/span> &lt;span class="n">ILogger&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">ExceptionHandleMiddleware&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">_logger&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="n">ExceptionHandleMiddleware&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">RequestDelegate&lt;/span> &lt;span class="n">next&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ILogger&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">ExceptionHandleMiddleware&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">logger&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">ExceptionHandleMiddleware&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">RequestDelegate&lt;/span> &lt;span class="n">next&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ILogger&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">ExceptionHandleMiddleware&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">logger&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">_next&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">_logger&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">logger&lt;/span>&lt;span class="p">;&lt;/span>
@@ -88,7 +374,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="cs">/// &amp;lt;/summary&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="cs">/// &amp;lt;param name=&amp;#34;context&amp;#34;&amp;gt;HTTP 的上下文&amp;lt;/param&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="cs">/// &amp;lt;returns&amp;gt;&amp;lt;/returns&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">async&lt;/span> &lt;span class="n">Task&lt;/span> &lt;span class="n">Invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">HttpContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="n">Task&lt;/span> &lt;span class="n">Invoke&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">HttpContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 確保 HTTP Request 可以多次讀取&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Request&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">EnableBuffering&lt;/span>&lt;span class="p">();&lt;/span>
@@ -102,7 +388,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="n">Task&lt;/span> &lt;span class="n">HandleExceptionAsync&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">HttpContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Exception&lt;/span> &lt;span class="n">exception&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">private&lt;/span> &lt;span class="n">Task&lt;/span> &lt;span class="n">HandleExceptionAsync&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">HttpContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Exception&lt;/span> &lt;span class="n">exception&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">path&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s">$&amp;#34;{context.Request.Path}&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">method&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s">$&amp;#34;{context.Request.Method}&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
@@ -119,12 +405,12 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Response&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">WriteAsync&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">$&amp;#34;Catch Exception from Middleware : {exception.Message}&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">static&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="n">ReadRequestBody&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">HttpContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">private&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="kt">string&lt;/span> &lt;span class="n">ReadRequestBody&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">HttpContext&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">using&lt;/span> &lt;span class="nn">var&lt;/span> &lt;span class="n">reader&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">StreamReader&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Request&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Body&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Encoding&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">UTF8&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 將 HTTP Request 的 Stream 起始位置歸零&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Request&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Seek&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">SeekOrigin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Begin&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">body&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">reader&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ReadToEndAsync&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="n">ConfigureAwait&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">false&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="n">GetAwaiter&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="n">GetResult&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">body&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">reader&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ReadToEndAsync&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="n">ConfigureAwait&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kc">false&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="n">GetAwaiter&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="n">GetResult&lt;/span>&lt;span class="p">();&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 將 HTTP Request 的 Stream 起始位置歸零&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Request&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Seek&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">SeekOrigin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Begin&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">body&lt;/span>&lt;span class="p">;&lt;/span>
@@ -209,19 +495,19 @@ Startup確實有抓到正確的參數，但是取得注入物件時全都空的�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">namespace&lt;/span> &lt;span class="nn">FunctionApp1&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Startup&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">FunctionsStartup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Startup&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">FunctionsStartup&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">override&lt;/span> &lt;span class="k">void&lt;/span> &lt;span class="n">ConfigureAppConfiguration&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">IFunctionsConfigurationBuilder&lt;/span> &lt;span class="n">builder&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="kd">override&lt;/span> &lt;span class="k">void&lt;/span> &lt;span class="n">ConfigureAppConfiguration&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">IFunctionsConfigurationBuilder&lt;/span> &lt;span class="n">builder&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">FunctionsHostBuilderContext&lt;/span> &lt;span class="n">context&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">GetContext&lt;/span>&lt;span class="p">();&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ConfigurationBuilder&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">AddJsonFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Combine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ApplicationRootPath&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;appsettings.json&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">optional&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="k">true&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">reloadOnChange&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">AddJsonFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Combine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ApplicationRootPath&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">$&amp;#34;appsettings.{context.EnvironmentName}.json&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">optional&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="k">true&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">reloadOnChange&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="k">false&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">AddJsonFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Combine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ApplicationRootPath&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">&amp;#34;appsettings.json&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">optional&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">reloadOnChange&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">AddJsonFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Combine&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">ApplicationRootPath&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s">$&amp;#34;appsettings.{context.EnvironmentName}.json&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">optional&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">reloadOnChange&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">.&lt;/span>&lt;span class="n">AddEnvironmentVariables&lt;/span>&lt;span class="p">();&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">override&lt;/span> &lt;span class="k">void&lt;/span> &lt;span class="n">Configure&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">IFunctionsHostBuilder&lt;/span> &lt;span class="n">builder&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="kd">override&lt;/span> &lt;span class="k">void&lt;/span> &lt;span class="n">Configure&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">IFunctionsHostBuilder&lt;/span> &lt;span class="n">builder&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">var&lt;/span> &lt;span class="n">context&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">GetContext&lt;/span>&lt;span class="p">();&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">builder&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Services&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Configure&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">AppSettings&lt;/span>&lt;span class="p">&amp;gt;(&lt;/span>&lt;span class="n">context&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Configuration&lt;/span>&lt;span class="p">);&lt;/span>
@@ -300,17 +586,17 @@ Startup確實有抓到正確的參數，但是取得注入物件時全都空的�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">namespace&lt;/span> &lt;span class="nn">FunctionApp1.Functions&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Function1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Function1&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">private&lt;/span> &lt;span class="k">readonly&lt;/span> &lt;span class="n">AppSettings&lt;/span> &lt;span class="n">_appSettings&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">private&lt;/span> &lt;span class="k">readonly&lt;/span> &lt;span class="n">AppSettings&lt;/span> &lt;span class="n">_appSettings&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="n">Function1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">IOptions&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">AppSettings&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">appSettings&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">Function1&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">IOptions&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">AppSettings&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">appSettings&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">_appSettings&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="n">appSettings&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Value&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na"> [FunctionName(&amp;#34;Function1&amp;#34;)]&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">public&lt;/span> &lt;span class="k">async&lt;/span> &lt;span class="n">Task&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">IActionResult&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">Run&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="kd">async&lt;/span> &lt;span class="n">Task&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="n">IActionResult&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="n">Run&lt;/span>&lt;span class="p">(&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na"> [HttpTrigger(AuthorizationLevel.Function, &amp;#34;get&amp;#34;, Route = null)]&lt;/span> &lt;span class="n">HttpRequest&lt;/span> &lt;span class="n">req&lt;/span>&lt;span class="p">,&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ILogger&lt;/span> &lt;span class="n">log&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
